@@ -772,7 +772,7 @@ async def export_excel(date_from: str, date_to: str, employee_id: Optional[str] 
     wb = Workbook()
     ws = wb.active
     ws.title = "Kehadiran"
-    headers = ["No", "Tanggal", "NIP", "Nama", "Departemen", "Tipe", "Check-in", "Check-out", "Status", "GPS", "Rencana Kerja", "Output"]
+    headers = ["No", "Tanggal", "NIP", "Nama", "Departemen", "Tipe", "Check-in", "Check-out", "Status", "GPS", "Aktivitas", "Output Kinerja"]
     ws.append(headers)
     for cell in ws[1]:
         cell.font = XLFont(bold=True, color="FFFFFF")
@@ -809,13 +809,14 @@ async def export_pdf(date_from: str, date_to: str, employee_id: Optional[str] = 
         Paragraph(f"Periode: {date_from} s/d {date_to}", styles["Normal"]),
         Spacer(1, 12),
     ]
-    data = [["No", "Tanggal", "NIP", "Nama", "Departemen", "Tipe", "Masuk", "Pulang", "Status", "GPS"]]
+    data = [["No", "Tanggal", "NIP", "Nama", "Departemen", "Tipe", "Masuk", "Pulang", "Status", "GPS", "Aktivitas", "Output Kinerja"]]
     for i, r in enumerate(rows, 1):
         data.append([
             i, r.get("attendance_date"), r.get("employee_code"), r.get("employee_name"),
             r.get("department_name"), r.get("attendance_type"),
             _fmt_time(r.get("check_in_time")), _fmt_time(r.get("check_out_time")),
             r.get("attendance_status"), "OK" if r.get("gps_verified") else "-",
+            r.get("activity") or "-", r.get("output") or "-",
         ])
     tbl = Table(data, repeatRows=1)
     tbl.setStyle(TableStyle([

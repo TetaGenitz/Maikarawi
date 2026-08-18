@@ -95,7 +95,7 @@ export default function ReportPage({ mode }) {  // "weekly" | "monthly"
             ))}
           </div>
           <Card className="border-gray-200"><CardContent className="p-0 overflow-auto"><Table>
-            <TableHeader><TableRow><TableHead>Tanggal</TableHead><TableHead>Pegawai</TableHead><TableHead>Departemen</TableHead><TableHead>Masuk</TableHead><TableHead>Pulang</TableHead><TableHead>Tipe</TableHead><TableHead>Status</TableHead><TableHead>Aktivitas</TableHead></TableRow></TableHeader>
+            <TableHeader><TableRow><TableHead>Tanggal</TableHead><TableHead>Pegawai</TableHead><TableHead>Departemen</TableHead><TableHead>Masuk</TableHead><TableHead>Pulang</TableHead><TableHead>Tipe</TableHead><TableHead>Status</TableHead><TableHead>Aktivitas</TableHead><TableHead>Output Kinerja</TableHead></TableRow></TableHeader>
             <TableBody>
               {data.rows.map(r=>(
                 <TableRow key={r.id}>
@@ -106,10 +106,11 @@ export default function ReportPage({ mode }) {  // "weekly" | "monthly"
                   <TableCell className="tabular-nums">{fmtTime(r.check_out_time)}</TableCell>
                   <TableCell><StatusBadge status={r.attendance_type}/></TableCell>
                   <TableCell><StatusBadge status={r.check_out_time ? r.attendance_status : "incomplete"}/></TableCell>
-                  <TableCell className="max-w-[240px] truncate">{r.activity || "-"}</TableCell>
+                  <TableCell className="max-w-[220px] truncate" title={r.activity || ""}>{r.activity || "-"}</TableCell>
+                  <TableCell className="max-w-[240px] truncate" title={r.output || ""} data-testid={`report-output-${r.id}`}>{r.output || "-"}</TableCell>
                 </TableRow>
               ))}
-              {data.rows.length===0 && <TableRow><TableCell colSpan={8} className="text-center py-8 text-muted-foreground">Belum ada data pada periode ini</TableCell></TableRow>}
+              {data.rows.length===0 && <TableRow><TableCell colSpan={9} className="text-center py-8 text-muted-foreground">Belum ada data pada periode ini</TableCell></TableRow>}
             </TableBody>
           </Table></CardContent></Card>
         </>
