@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { api } from "@/lib/api";
 import {
   LayoutDashboard, Users, Building2, MapPin, CalendarDays, FileSpreadsheet,
   Settings, LogOut, ClipboardList, PalmtreeIcon, ClipboardCheck, FileText,
@@ -23,13 +24,19 @@ const nav = [
 export default function AdminSidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [settings, setSettings] = useState(null);
+  useEffect(() => { api.get("/settings").then(r => setSettings(r.data)).catch(()=>{}); }, []);
   return (
     <aside className="w-64 bg-white border-r border-gray-200 fixed left-0 top-0 h-screen flex flex-col z-30">
       <div className="p-5 border-b border-gray-200">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-md bg-primary text-white flex items-center justify-center font-display font-bold">SK</div>
+          {settings?.logo ? (
+            <img src={settings.logo} alt="logo" className="w-11 h-11 rounded-md object-contain bg-white" data-testid="sidebar-logo" />
+          ) : (
+            <div className="w-10 h-10 rounded-md bg-primary text-white flex items-center justify-center font-display font-bold">MK</div>
+          )}
           <div>
-            <div className="font-display text-lg font-bold text-primary leading-none">SiKerja</div>
+            <div className="font-display text-lg font-bold text-primary leading-none">{settings?.main_title || "Mai Karawi"}</div>
             <div className="text-[11px] uppercase tracking-widest text-muted-foreground mt-1">Admin Portal</div>
           </div>
         </div>

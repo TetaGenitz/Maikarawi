@@ -382,10 +382,10 @@ async def delete_holiday(hid: str, admin: dict = Depends(require_admin)):
 # ---- Settings ----
 DEFAULT_SETTINGS = {
     "id": "app",
-    "office_name": "Kantor Pemerintahan",
-    "logo": "",
-    "main_title": "SiKerja",
-    "subtitle": "Sistem Kehadiran Pegawai",
+    "office_name": "Komisi Pemilihan Umum",
+    "logo": "https://customer-assets-m6fa6gv7.emergentagent.net/job_employee-check-23/artifacts/dsw7h8kq_c796c9da-c7ea-4874-a728-1f4cee24afb0.png",
+    "main_title": "Mai Karawi",
+    "subtitle": "Sistem Absensi Pegawai",
     "primary_color": "#800000",
     "secondary_color": "#f8f9fa",
     "ad_enabled": True,

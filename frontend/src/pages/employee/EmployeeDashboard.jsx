@@ -98,9 +98,16 @@ export default function EmployeeDashboard() {
   return (
     <div className="space-y-5" data-testid="employee-dashboard">
       <div className="bg-primary text-white rounded-xl p-5">
-        <div className="text-[11px] uppercase tracking-widest text-white/80 font-semibold">Selamat Datang</div>
-        <div className="mt-1 font-display text-2xl font-bold leading-tight">{emp?.full_name || user?.email}</div>
-        <div className="text-white/85 text-sm mt-1">{emp?.employee_id} • {emp?.position || "Pegawai"}</div>
+        <div className="flex items-center gap-3">
+          {user?.settings_logo || true ? (
+            <img src="https://customer-assets-m6fa6gv7.emergentagent.net/job_employee-check-23/artifacts/dsw7h8kq_c796c9da-c7ea-4874-a728-1f4cee24afb0.png" alt="logo" className="w-14 h-14 rounded-md object-contain bg-white/95 p-1" />
+          ) : null}
+          <div className="flex-1 min-w-0">
+            <div className="text-[11px] uppercase tracking-widest text-white/80 font-semibold">Selamat Datang</div>
+            <div className="mt-0.5 font-display text-xl font-bold leading-tight truncate">{emp?.full_name || user?.email}</div>
+            <div className="text-white/85 text-xs mt-0.5">{emp?.employee_id} • {emp?.position || "Pegawai"}</div>
+          </div>
+        </div>
         <div className="mt-5 flex items-end justify-between">
           <div>
             <div className="text-[11px] uppercase tracking-widest text-white/70">Waktu Saat Ini</div>

@@ -43,9 +43,13 @@ export default function AdminLogin() {
       <div className="flex items-center justify-center p-8 lg:p-16 bg-white">
         <div className="w-full max-w-md">
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-12 h-12 rounded-md bg-primary text-white flex items-center justify-center">
-              <Shield className="w-6 h-6" />
-            </div>
+            {settings?.logo ? (
+              <img src={settings.logo} alt="logo" className="w-14 h-14 rounded-md object-contain bg-white" data-testid="admin-login-logo" />
+            ) : (
+              <div className="w-12 h-12 rounded-md bg-primary text-white flex items-center justify-center">
+                <Shield className="w-6 h-6" />
+              </div>
+            )}
             <div>
               <div className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-semibold">Portal Administrator</div>
               <div className="font-display text-2xl font-bold text-primary leading-tight">{settings?.main_title || "SiKerja"}</div>
