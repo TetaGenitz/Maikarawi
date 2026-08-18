@@ -157,6 +157,88 @@ class TestCRUD:
         r = admin_client.delete(f"{API}/locations/{lid}", timeout=15)
         assert r.status_code == 200
 
+
+# ---------- Locations detailed (bug retest) ----------
+class TestLocationsDetailed:
+    def test_seeded_kantor_pusat_present(self, admin_client):
+        r = admin_client.get(f"{API}/locations", timeout=15)
+        assert r.status_code == 200
+        names = [x["name"] for x in r.json()]
+        assert any("Kantor Pusat" in n for n in names), f"Kantor Pusat missing from {names}"
+
+    def test_create_valid_location(self, admin_client):
+        payload = {"name": "TEST_LocValid", "latitude": -6.2, "longitude": 106.8,
+                   "allowed_radius": 150, "status": "active"}
+        r = admin_client.post(f"{API}/locations", json=payload, timeout=15)
+        assert r.status_code == 200, r.text
+        j = r.json()
+        assert j["name"] == payload["name"]
+        assert j["latitude"] == -6.2 and j["longitude"] == 106.8
+        assert j["allowed_radius"] == 150 and j["status"] == "active"
+        assert "id" in j and "_id" not in j
+        # GET verify persisted
+        r = admin_client.get(f"{API}/locations", timeout=15)
+        assert any(x["id"] == j["id"] and x["name"] == payload["name"] for x in r.json())
+        admin_client.delete(f"{API}/locations/{j['id']}", timeout=15)
+
+    def test_create_invalid_missing_name(self, admin_client):
+        r = admin_client.post(f"{API}/locations",
+                              json={"latitude": -6.2, "longitude": 106.8,
+                                    "allowed_radius": 100, "status": "active"}, timeout=15)
+        assert r.status_code in (400, 422), f"expected 4xx, got {r.status_code}: {r.text}"
+
+    def test_create_invalid_bad_latitude_type(self, admin_client):
+        r = admin_client.post(f"{API}/locations",
+                              json={"name": "TEST_BadLat", "latitude": "notanumber",
+                                    "longitude": 106.8, "allowed_radius": 100,
+                                    "status": "active"}, timeout=15)
+        assert r.status_code in (400, 422)
+
+    def test_update_location(self, admin_client):
+        cr = admin_client.post(f"{API}/locations", json={
+            "name": "TEST_Upd", "latitude": 1.0, "longitude": 2.0,
+            "allowed_radius": 100, "status": "active"}, timeout=15)
+        assert cr.status_code == 200
+        lid = cr.json()["id"]
+        ur = admin_client.put(f"{API}/locations/{lid}", json={
+            "name": "TEST_Upd2", "latitude": 1.5, "longitude": 2.5,
+            "allowed_radius": 250, "status": "inactive"}, timeout=15)
+        assert ur.status_code == 200
+        j = ur.json()
+        assert j["name"] == "TEST_Upd2" and j["allowed_radius"] == 250
+        assert j["status"] == "inactive" and j["latitude"] == 1.5
+        admin_client.delete(f"{API}/locations/{lid}", timeout=15)
+
+    def test_delete_location_removes(self, admin_client):
+        cr = admin_client.post(f"{API}/locations", json={
+            "name": "TEST_Del", "latitude": 3.0, "longitude": 4.0,
+            "allowed_radius": 50, "status": "active"}, timeout=15)
+        lid = cr.json()["id"]
+        dr = admin_client.delete(f"{API}/locations/{lid}", timeout=15)
+        assert dr.status_code == 200
+        r = admin_client.get(f"{API}/locations", timeout=15)
+        assert not any(x["id"] == lid for x in r.json())
+
+    def test_wfo_inside_radius_success(self, admin_client):
+        """WFO check-in near seeded office coordinates should succeed."""
+        unique = uuid.uuid4().hex[:8]
+        email = f"wfo_{unique}@gov.id"
+        cr = admin_client.post(f"{API}/employees", json={
+            "employee_id": f"WFO_{unique}", "full_name": "WFO User",
+            "email": email, "password": "employee123",
+        }, timeout=15)
+        assert cr.status_code == 200
+        lr = requests.post(f"{API}/auth/employee/login",
+                           json={"email": email, "password": "employee123"}, timeout=15)
+        tok = lr.json()["token"]
+        r = requests.post(f"{API}/attendance/check-in",
+                          headers={"Authorization": f"Bearer {tok}"},
+                          json={"attendance_type": "WFO",
+                                "latitude": OFFICE_LAT, "longitude": OFFICE_LON,
+                                "selfie": "data:image/png;base64,AAA"}, timeout=15)
+        assert r.status_code == 200, r.text
+        assert r.json()["attendance_type"] == "WFO"
+
     def test_holidays_create_and_list(self, admin_client):
         far = (date.today() + timedelta(days=365)).isoformat()
         r = admin_client.post(f"{API}/holidays",
