@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #f8f9fa;
+    color: #1a1a1a;
+}
+
+h1, h2, h3, h4, h5, .font-display {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+.font-mono-time {
+    font-family: 'Outfit', sans-serif;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+@layer base {
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 0 0% 10%;
+        --card: 0 0% 100%;
+        --card-foreground: 0 0% 10%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 0 0% 10%;
+        --primary: 0 100% 25%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 0 0% 96.5%;
+        --secondary-foreground: 0 0% 10%;
+        --muted: 0 0% 96.5%;
+        --muted-foreground: 0 0% 32%;
+        --accent: 0 0% 96.5%;
+        --accent-foreground: 0 0% 10%;
+        --destructive: 0 74% 42%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 220 13% 91%;
+        --input: 220 13% 91%;
+        --ring: 0 100% 25%;
+        --chart-1: 0 100% 25%;
+        --chart-2: 220 70% 45%;
+        --chart-3: 145 55% 35%;
+        --chart-4: 40 90% 50%;
+        --chart-5: 260 60% 45%;
+        --radius: 0.5rem;
+    }
+}
+
+@layer base {
+    * { @apply border-border; }
+    body { @apply bg-background text-foreground; }
+    button, input, select, textarea { font-family: inherit; }
+}
+
+.tabular-nums { font-variant-numeric: tabular-nums; }
+
+.gov-gradient-overlay {
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%);
+}
+
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -12px rgba(128,0,0,0.18);
+    border-color: rgba(128,0,0,0.25);
+}
+
+.btn-tactile {
+    transition: transform 0.12s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.btn-tactile:active { transform: scale(0.97); }
+
+@keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(128,0,0,0.35); }
+    70% { box-shadow: 0 0 0 18px rgba(128,0,0,0); }
+    100% { box-shadow: 0 0 0 0 rgba(128,0,0,0); }
+}
+.ring-pulse { animation: pulse-ring 2s infinite; }
+
+.scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }

@@ -1,0 +1,148 @@
+{
+  "theme": "light",
+  "typography": {
+    "headings": {
+      "font": "Outfit",
+      "import_command": "@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');",
+      "scale": {
+        "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight font-bold",
+        "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight font-semibold",
+        "h3": "text-xl sm:text-2xl font-semibold",
+        "h4": "text-lg sm:text-xl font-medium"
+      },
+      "usage": "Use Outfit for all display headings, prominent numeric data (e.g. check-in times), and dashboard summary metrics."
+    },
+    "body": {
+      "font": "IBM Plex Sans",
+      "import_command": "@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');",
+      "scale": {
+        "base": "text-base leading-relaxed",
+        "small": "text-sm leading-normal",
+        "label": "text-xs uppercase tracking-[0.2em] font-semibold"
+      },
+      "usage": "Use IBM Plex Sans for body text, forms, data tables, and system labels. Its sterile, structural form fits government applications perfectly."
+    }
+  },
+  "colors": {
+    "archetype": "Swiss & High-Contrast (Authority, Clarity, Truth) adapted for Government",
+    "primary": {
+      "DEFAULT": "#800000",
+      "foreground": "#ffffff",
+      "hover": "#5c0000",
+      "description": "Deep Institutional Maroon. Use for primary CTAs like Check-in buttons, active states, and core branding. Commands authority and trust."
+    },
+    "background": {
+      "DEFAULT": "#ffffff",
+      "alt": "#f8f9fa",
+      "description": "Crisp white and soft off-white to maintain the high contrast and clarity required by institutional apps."
+    },
+    "foreground": {
+      "DEFAULT": "#1a1a1a",
+      "muted": "#4a4a4a",
+      "description": "Near black for maximum readability. No light gray text."
+    },
+    "status": {
+      "on_time": "#166534",
+      "late": "#9a3412",
+      "absent": "#991b1b",
+      "leave": "#3730a3",
+      "description": "Status colors for attendance badges. Ensure text contrast over soft tinted backgrounds."
+    },
+    "border": {
+      "DEFAULT": "#e5e7eb"
+    }
+  },
+  "layouts": {
+    "admin_dashboard": {
+      "type": "High Density Grid",
+      "structure": "Sidebar on left (fixed), top navbar (sticky with glassmorphism), main content area. Use grid-cols-1 md:grid-cols-3 lg:grid-cols-4 with gap-6.",
+      "components": "Shadcn tables for attendance logs, summary cards (col-span-1), and charts (col-span-2 or 3)."
+    },
+    "employee_app": {
+      "type": "Mobile-First App",
+      "structure": "Bottom navigation bar (fixed, glassmorphism) on mobile screens. Top header with WFO/WFH toggle. Main bento-grid layout for 'Today's Status', 'Check-in CTAs', and 'Recent Logs'.",
+      "components": "Massive tactile CTAs for Check In/Out. Cardless dense UI or minimal 1px border cards. Focus on frictionless interaction flow."
+    },
+    "login_page": {
+      "type": "Split Screen (Desktop) / Stacked (Mobile)",
+      "structure": "Left/Top: Institutional branding and login form. Right/Bottom: Government advertisement banner.",
+      "components": "Form with clear labels, full-width button. The ad banner should use the provided background images."
+    },
+    "spacing_strategy": {
+      "padding": "Generous spacing. p-6 or p-8 inside cards. Section gaps of py-12 or py-16.",
+      "alignment": "Left-align forms and data tables. Center-align only the main Check-in/out CTA on the employee mobile view."
+    }
+  },
+  "surfaces_and_visuals": {
+    "cards": {
+      "style": "Flat background, 1px subtle border (border-gray-200), no shadow by default. Hover: slight lift (-translate-y-1) and shadow-lg.",
+      "radius": "rounded-md"
+    },
+    "glassmorphism": {
+      "usage": "Use ONLY for sticky headers or bottom mobile navs. backdrop-blur-xl bg-white/80 border-b border-gray-200.",
+      "note": "Do not use for main content cards to preserve high legibility required by government apps."
+    },
+    "ctas": {
+      "style": "Solid Maroon background, crisp edges (rounded-md), hover state darkens to #5c0000. For the massive Check-in button, consider a subtle Neumorphic inner shadow to make it feel tactile."
+    }
+  },
+  "motion": {
+    "hover": "Transition transform 0.2s ease, opacity 0.2s ease on interactive elements.",
+    "page_load": "Staggered fade-in for dashboard widgets.",
+    "check_in_flow": "Micro-interaction: Button press scale down (0.95), loading spinner, success checkmark animation."
+  },
+  "accessibility": {
+    "contrast": "Text must meet WCAG AA against background. Maroon (#800000) on white is >7:1.",
+    "focus": "focus:ring-2 focus:ring-primary focus:ring-offset-2 on all inputs and buttons.",
+    "testing": "All interactive elements MUST include data-testid attribute (e.g., data-testid='employee-check-in-btn', data-testid='admin-login-btn').",
+    "language": "All UI text must be in Bahasa Indonesia."
+  },
+  "components_instructions": {
+    "forms": "Use Shadcn Form, Input, Select. Left-aligned labels. Use IBM Plex Sans.",
+    "tables": "Use Shadcn Table. Dense rows for data density.",
+    "modals": "Use Shadcn Dialog for the Selfie Camera capture and Geofence alerts.",
+    "charts": "Use Recharts (via Shadcn Chart) for Admin attendance summary charts (Bar/Line). Use solid colors.",
+    "toasts": "Use Sonner for success/error notifications (e.g., 'Check-in Berhasil', 'Di Luar Area Kantor')."
+  },
+  "media": {
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/16898413/pexels-photo-16898413.jpeg",
+        "description": "Jakarta illuminated skyline at night",
+        "category": "Admin Login Advertisement Banner (Background)"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1555043722-4523972f07ee?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTJ8MHwxfHNlYXJjaHwxfHxqYWthcnRhJTIwc2t5bGluZSUyMGxhbmRzY2FwZXxlbnwwfHx8fDE3ODcwMTQ1MzV8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Jakarta daylight high-angle view",
+        "category": "Employee Login Advertisement Banner (Background)"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1600621894305-7ec7d92d9644?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwyfHxnb3Zlcm5tZW50JTIwb2ZmaWNpYWwlMjBvZmZpY2V8ZW58MHx8fHwxNzg3MDE0NTM1fDA&ixlib=rb-4.1.0&q=85",
+        "description": "White concrete official building",
+        "category": "Government Dashboard Header Background or Content Banner"
+      }
+    ],
+    "icons": {
+      "library": "lucide-react",
+      "usage": "Use clear, universally understood icons. No playful/emoji icons."
+    }
+  },
+  "universal_guidelines_for_main_agent": [
+    "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur) only for sticky navigation menus, do not use it for content cards.",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms. Always add transitions for specific interactive elements like button, input excluding transforms.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file. This disrupts the human natural reading flow of text.",
+    "Always use modern button styles. For government apps, use crisp sharp or slightly rounded corners (rounded-md) with clear interaction animations and the Maroon brand color.",
+    "NEVER use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons. Use lucide-react.",
+    "Every interaction needs micro-animations - hover states, transitions. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Main agent relies on these image URLs. Missing categories = main agent will use placeholder text which is FORBIDDEN.",
+    "All interactive and key informational elements MUST include a data-testid attribute to facilitate robust automated testing.",
+    "Theme: Strictly Light mode. Government institutional portals require high legibility and an authoritative, paper-like clarity.",
+    "The UI MUST be completely localized in Bahasa Indonesia.",
+    "DO NOT use HTML-based components for advanced user interactions (dropdown, calendar, toast). Use Shadcn components for these."
+  ]
+}
