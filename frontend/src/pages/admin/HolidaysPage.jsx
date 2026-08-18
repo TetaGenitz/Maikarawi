@@ -14,7 +14,7 @@ export default function HolidaysPage() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ holiday_date: "", name: "", description: "" });
   const load = () => api.get("/holidays").then(r => setItems(r.data));
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
   const save = async () => { await api.post("/holidays", form); toast.success("Tersimpan"); setOpen(false); setForm({holiday_date:"",name:"",description:""}); load(); };
   return (
     <div className="space-y-6" data-testid="holidays-page">

@@ -10,7 +10,7 @@ import { fmtDate } from "@/lib/api";
 export default function LeavesAdminPage() {
   const [items, setItems] = useState([]);
   const load = () => api.get("/leaves").then(r=>setItems(r.data));
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
   const decide = async (id, status) => { await api.put(`/leaves/${id}/decision`, { status }); toast.success("Diperbarui"); load(); };
   return (
     <div className="space-y-6" data-testid="admin-leaves-page">

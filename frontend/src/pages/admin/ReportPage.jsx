@@ -35,7 +35,7 @@ export default function ReportPage({ mode }) {  // "weekly" | "monthly"
       : api.get("/reports/monthly", { params: { year, month, ...params } });
     req.then(r=>setData(r.data));
   };
-  useEffect(load, [mode]);
+  useEffect(() => { load(); }, [mode]);
 
   const exportExcel = async () => {
     const { data: blob } = await api.get("/exports/excel", { params: { date_from: data.period.from, date_to: data.period.to, employee_id: employeeId || undefined, department_id: deptId || undefined }, responseType: "blob" });

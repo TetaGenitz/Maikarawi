@@ -16,7 +16,7 @@ export default function MyLeaves() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ leave_type: "annual", start_date: "", end_date: "", reason: "" });
   const load = () => api.get("/leaves").then(r=>setItems(r.data));
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
   const submit = async () => {
     await api.post("/leaves", form);
     toast.success("Pengajuan cuti terkirim"); setOpen(false);
