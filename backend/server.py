@@ -582,6 +582,10 @@ async def check_in(body: CheckInBody, user: dict = Depends(get_current_user)):
 async def check_out(body: CheckOutBody, user: dict = Depends(get_current_user)):
     if user.get("role") != "employee":
         raise HTTPException(403, "Hanya pegawai")
+    if not (body.activity or "").strip():
+        raise HTTPException(400, "Aktivitas wajib diisi saat check-out")
+    if not (body.output or "").strip():
+        raise HTTPException(400, "Output Kinerja wajib diisi saat check-out")
     emp = await db.employees.find_one({"user_id": user["id"]})
     if not emp: raise HTTPException(400, "Data pegawai tidak ditemukan")
     tdy = today_str()

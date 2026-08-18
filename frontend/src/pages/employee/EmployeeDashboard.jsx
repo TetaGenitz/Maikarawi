@@ -188,18 +188,19 @@ export default function EmployeeDashboard() {
 
       <Dialog open={checkoutOpen} onOpenChange={setCheckoutOpen}>
         <DialogContent data-testid="checkout-dialog">
-          <DialogHeader><DialogTitle>Laporan Aktivitas / Output</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>Laporan Kegiatan Hari Ini</DialogTitle></DialogHeader>
+          <p className="text-xs text-muted-foreground -mt-2">Wajib diisi sebelum melakukan check-out.</p>
           <div className="space-y-3">
             <div>
-              <Label>Aktivitas hari ini</Label>
-              <Textarea value={checkoutData.activity} onChange={(e)=>setCheckoutData({...checkoutData, activity: e.target.value})} data-testid="checkout-activity" rows={3} />
+              <Label>Aktivitas hari ini <span className="text-primary">*</span></Label>
+              <Textarea placeholder="Contoh: Menyusun laporan logistik, mengikuti rapat koordinasi..." value={checkoutData.activity} onChange={(e)=>setCheckoutData({...checkoutData, activity: e.target.value})} data-testid="checkout-activity" rows={3} />
             </div>
             <div>
-              <Label>Output / Hasil</Label>
-              <Textarea value={checkoutData.output} onChange={(e)=>setCheckoutData({...checkoutData, output: e.target.value})} data-testid="checkout-output" rows={2} />
+              <Label>Output Kinerja <span className="text-primary">*</span></Label>
+              <Textarea placeholder="Contoh: 1 draft laporan selesai, notulen rapat terkirim..." value={checkoutData.output} onChange={(e)=>setCheckoutData({...checkoutData, output: e.target.value})} data-testid="checkout-output" rows={3} />
             </div>
             <div>
-              <Label>Status</Label>
+              <Label>Status Penyelesaian</Label>
               <Select value={checkoutData.activity_status} onValueChange={(v)=>setCheckoutData({...checkoutData, activity_status: v})}>
                 <SelectTrigger><SelectValue/></SelectTrigger>
                 <SelectContent>
@@ -216,7 +217,7 @@ export default function EmployeeDashboard() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={()=>{setCheckoutOpen(false); setPendingSelfie(null);}}>Batal</Button>
-            <Button disabled={busy || !checkoutData.activity} onClick={doCheckOut} data-testid="checkout-submit-btn" className="bg-primary hover:bg-[#5c0000]">Simpan & Check-out</Button>
+            <Button disabled={busy || !checkoutData.activity.trim() || !checkoutData.output.trim()} onClick={doCheckOut} data-testid="checkout-submit-btn" className="bg-primary hover:bg-[#5c0000]">Simpan & Check-out</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
